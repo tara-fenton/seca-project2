@@ -1,7 +1,9 @@
 <h2>My Users</h2>
 <ul class="users">
-  <li *ngFor="let user of users" (click)="onSelect(user)" [class.selected]="user === selectedUser">
-    <span class="badge">{{user.id}}</span> {{user.name}}
+  <li *ngFor="let user of users">
+    <a routerLink="/users/{{user.id}}">
+      <span class="badge">{{user.id}}</span> {{user.name}}
+    </a>
   </li>
 </ul>
 
