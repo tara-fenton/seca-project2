@@ -68,6 +68,18 @@ export class UserService {
       catchError(this.handleError<User>('deleteUser'))
     );
   }
+
+  /* GET users whose name contains search term */
+  searchUsers(term: string): Observable<User[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<User[]>(`${this.usersUrl}/?name=${term}`).pipe(
+      tap(_ => this.log(`found users matching "${term}"`)),
+      catchError(this.handleError<User[]>('searchUsers', []))
+    );
+  }
   /**
  * Handle Http operation that failed.
  * Let the app continue.
