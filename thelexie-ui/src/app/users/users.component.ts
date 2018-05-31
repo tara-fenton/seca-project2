@@ -25,8 +25,8 @@ export class UsersComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.userService.addUser{ name } as User)
-      .subscribe(hero => {
+    this.userService.addUser({ name } as User)
+      .subscribe(user => {
         this.users.push(user);
       });
   }

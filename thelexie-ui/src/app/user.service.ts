@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
 import { Observable, of } from 'rxjs';
@@ -13,27 +15,41 @@ const httpOptions = {
   providedIn: 'root'
 })
 
+
+
+
+
+
 export class UserService {
 
   constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
 
+    users: Observable<User[]>;
+
     /** Log a UserService message with the MessageService */
   private log(message: string) {
     this.messageService.add('UserService: ' + message);
   }
-  private usersUrl = 'api/users';  // URL to web api
+  private usersUrl = 'http://localhost:8080/api/users';  // URL to web api
 
   getUsers(): Observable<User[]> {
     // TODO: send the message _after_ fetching the users
     this.messageService.add('UserService: fetched users');
     // return of(USERS);
+    //this works
     return this.http.get<User[]>(this.usersUrl)
     .pipe(
       tap(users => this.log(`fetched users`)),
       catchError(this.handleError('getUsers', []))
     );
+    //trying this
+    // return this.http
+    //     .get<User[]>("http://localhost:8080/api/users")
+        // .map(data => console.log(data))
+        // .do(console.log);
+
   }
 
   getUser(id: number): Observable<User> {
